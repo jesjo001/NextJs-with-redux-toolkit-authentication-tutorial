@@ -2,6 +2,7 @@
 import { ReduxProvider } from '../redux/providers'
 import StyledComponentsRegistry from '../lib/register'
 import GlobalThemeWrapper from '../lib/GlobalThemeWrapper'
+import RequireAuth from '../lib/RequireAuthWrapper'
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,15 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <>
-      {/* <body> */}
         <ReduxProvider>
-        <StyledComponentsRegistry>
-          <GlobalThemeWrapper>
-          {children}
-          </GlobalThemeWrapper>
-        </StyledComponentsRegistry>
+          <RequireAuth>
+            <StyledComponentsRegistry>
+              <GlobalThemeWrapper>
+              {children}
+              </GlobalThemeWrapper>
+            </StyledComponentsRegistry>
+          </RequireAuth>
         </ReduxProvider>
-      {/* </body> */}
     </>
   )
 }
