@@ -14,5 +14,5 @@ export default function GlobalThemeWrapper({children}){
             <GlobalStyle />
             {children}
         </ThemeProvider>
-    );
+    )
 }
