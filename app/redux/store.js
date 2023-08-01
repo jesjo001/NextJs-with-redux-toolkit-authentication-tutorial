@@ -1,14 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
+"use client"
+
+import { configureStore } from "@reduxjs/toolkit"
+import { apiSlice } from "./api"
 import authReducer from "./features/auth/authSlice";
-import { apiSlice } from "./api/apiSlice";
 
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        auth: authReducer
+        auth: authReducer,
     },
-    middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(apiSlice.middleware),
-    devTools: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiSlice.middleware),
+    devTools: process.env.NODE_ENV !== 'production',
 })
-

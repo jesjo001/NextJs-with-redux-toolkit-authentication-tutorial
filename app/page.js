@@ -1,29 +1,33 @@
 "use client"
+import Image from 'next/image'
 import styled from "styled-components"
 import { useLocalStorage } from 'usehooks-ts';
 import { defaultTheme } from './themes/defaultTheme';
 import { darkTheme } from './themes/darkTheme';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [, setTheme] = useLocalStorage("theme", defaultTheme);
+  const { push } = useRouter()
+
 
   return (
     <Container>
-      <button
+      <PrimaryButton
         variant="contained"
         color="primary"
-        onClick={() => setTheme(defaultTheme)}
         style={{ marginRight: 8 }}
+        onClick={() => push('/dashboard/home')}
       >
-        Use light theme 
-      </button>
-      <button
+        dashboard
+      </PrimaryButton>
+      <PrimaryButton
         variant="contained"
         color="secondary"
-        onClick={() => setTheme(darkTheme)}
+        onClick={() => push('/login')}
       >
-        Use Dark Theme
-      </button>
+        Login
+      </PrimaryButton>
     </Container>
   )
 }
@@ -35,10 +39,14 @@ const Container = styled.div`
   padding: 0px;
   margin: 0px;
   background-color: ${ props => props.theme.bodyColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 const PrimaryButton = styled.button`
   width : 200px;
   height: 50px;
   background-color: white;
   border-radius: 20px;
+
 `

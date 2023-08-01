@@ -1,9 +1,7 @@
 "use client"
+import { useGetUsersQuery } from "@/app/redux/features/users/userAplSlice";
 import React from "react";
 import styled from "styled-components"
-import { useLocalStorage } from 'usehooks-ts';
-import { darkTheme } from '../../../themes/darkTheme';
-import { defaultTheme } from '@/app/themes/defaultTheme';
 
 const Container = styled.div`
     width: 100vw;
@@ -15,11 +13,14 @@ const Container = styled.div`
 `
 
 export default function Home() {
-  const [, setTheme] = useLocalStorage("theme", defaultTheme);
-
+  const { data, isLoading } = useGetUsersQuery()
+  // const { data: singleUser, isError, isLoading, error } = useGetSingleUserQuery('12')
+  
+  console.log("users isLoading ", isLoading)
+  console.log("users data ", data)
   return (
     <Container>
-        dashboard
+        Dashboard
     </Container>
   )
 }

@@ -1,16 +1,16 @@
 "use client"
 import React, { useRef } from 'react'
 import { styled } from 'styled-components'
-import { useLoginMutation } from '../redux/features/auth/authApiSlice'
 import { useRouter } from 'next/navigation'
+import { useLoginMutation } from '@/app/redux/features/auth/authApiSlice'
+import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
-import { setCredentials } from '../redux/features/auth/authSlice'
+import { setCredentials } from '@/app/redux/features/auth/authSlice'
 
 function Login() {
-    const [login, { isLoading }] = useLoginMutation()
+    const { push } = useRouter()
+    const [login, { isLoading, error, success, isError }] = useLoginMutation();
     const dispatch = useDispatch()
-    const router = useRouter()
-
     const emailRef = useRef()
     const passwordRef = useRef()
 
@@ -21,29 +21,31 @@ function Login() {
         const password = passwordRef?.current?.value
 
         try {
-      
+    
             const response = await login({ email, password}).unwrap()
-            dispatch(setCredentials({ ...response, email }))
-      
+  
             if(response?.accessToken){
-              router.push('/dashboard/home')
+                dispatch(setCredentials({ response }))
+                toast.success("Successfully logged in....")
+                push('/dashboard/home')
             }
-      
-          } catch (err) {
+            
+        } catch (err) {
             console.log(err)
-          }
-
+        }
     }
-  return (
-    <Container>
-        <FormContainer>
-            <TitleContainer>Login</TitleContainer>
-            <CustomInput placeholder='Enter Email...' type='text' ref={emailRef} />
-            <CustomInput placeholder='Enter Password...' type='password' ref={passwordRef}/>
-            <CustomButton onClick={(e) => submitForm(e)}> Submit </CustomButton>
-        </FormContainer>
-    </Container>
-  )
+
+
+    return (
+        <Container>
+            <FormContainer>
+                <TitleContainer>Login</TitleContainer>
+                <CustomInput placeholder='Enter Email...' type='text' ref={emailRef} />
+                <CustomInput placeholder='Enter Password...' type='password' ref={passwordRef}/>
+                <CustomButton onClick={(e) => submitForm(e)}> Submit </CustomButton>
+            </FormContainer>
+        </Container>
+    )
 }
 
 export default Login
