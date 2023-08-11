@@ -9,7 +9,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: { 
         user : TokenService.getUser(),
-        token: TokenService.getLocalAccessToken()
+        token: TokenService.getToken()
     },
     reducers: {
         setCredentials: (state, action) => {
